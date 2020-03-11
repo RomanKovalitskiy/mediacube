@@ -15,9 +15,16 @@
     "@vue/cli-plugin-babel": "~4.2.0",
     "@vue/cli-plugin-eslint": "~4.2.0",
     "@vue/cli-service": "~4.2.0",
+    "@vue/eslint-config-airbnb": "~4.0.0",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.7.2",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-prettier": "^3.1.2",
     "eslint-plugin-vue": "^6.1.2",
+    "husky": "^4.2.1",
+    "lint-staged": "^8.1.0",
+    "prettier": "^1.19.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
@@ -26,16 +33,75 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
+      "plugin:vue/recommended",
+      "@vue/airbnb",
+      "prettier/vue",
+      "plugin:prettier/recommended"
+    ],	
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "htmlWhitespaceSensitivity": "ignore",
+          "singleQuote": true
+        }
+      ],
+      "import/order": 0,
+      "no-console": 0,
+      "import/no-unresolved": 0,
+      "import/extensions": 0,
+      "import/prefer-default-export": 0,
+      "no-shadow": [
+        2,
+        {
+          "allow": [
+            "state",
+            "getters"
+          ]
+        }
+      ],
+      "no-unused-vars": [
+        "error",
+        {
+          "argsIgnorePattern": "state"
+        }
+      ],
+      "no-param-reassign": 0,
+      "consistent-return": 0,
+      "no-plusplus": 0,
+      "vue/no-v-html": 0,
+      "vue/require-default-prop": 0,
+      "vue/html-self-closing": [
+        "error",
+        {
+          "html": {
+            "void": "any"
+          }
+        }
+      ]
+    }
   },
   "browserslist": [
     "> 1%",
-    "last 2 versions"
-  ]
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "vue-cli-service lint",
+      "git add"
+    ],
+    "*.vue": [
+      "vue-cli-service lint",
+      "git add"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  }
 }
